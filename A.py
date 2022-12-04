@@ -20,13 +20,12 @@ def getFuel(pattern):
     return fuel
 
 
-# Only the parking lot model is exposed from the current pattern.
+# Showing the grid.
 def getGrid(pattern):
     return pattern.split(' ')[0]
 
 
-# Obtains whether or not the transport means v can move
-# vertically by s in the current pattern.
+# Verify if the vehicule can move vertically
 def canCol(pattern, v, s):
     if s == 0:
         return False
@@ -52,8 +51,7 @@ def canCol(pattern, v, s):
     return True
 
 
-# In the current pattern, the transport means v moves
-# vertically by s and then the pattern is obtained.
+# move the vehicule vertically
 def goCol(pattern, v, s):
     ans = pattern
     c = 0
@@ -78,7 +76,7 @@ def goCol(pattern, v, s):
     return ans
 
 
-# Same with canCol.
+# Verify if the vehicule can move horizontally
 def canRow(pattern, v, s):
     if s == 0:
         return False
@@ -104,7 +102,7 @@ def canRow(pattern, v, s):
     return True
 
 
-# Same with goCol.
+# move the vehicule horizontaly
 def goRow(pattern, v, s):
     ans = pattern
     r = 0
@@ -129,12 +127,11 @@ def goRow(pattern, v, s):
     return ans
 
 
-# Gets the heuristic value of the current pattern.
-# A method is a method of a heuristic.
-# That is, if the method is 1, then the heuristic is H2.
+
+
 lamda = 1
 
-
+# Caluculate the heuristic
 def calcH(pattern, method):
     ans = 0
     if method == 1:
@@ -166,7 +163,7 @@ def calcH(pattern, method):
     return ans
 
 
-# Solve the problem using the A* algorithm.
+# Solving the problem using  A/A* algorithm.
 def SolveA(pattern, testCase, method):
     beg = float(time.time())
     fuel = getFuel(pattern)

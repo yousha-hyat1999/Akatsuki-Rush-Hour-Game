@@ -18,7 +18,7 @@ def getFuel(pattern):
     return fuel
 
 
-#Showing the grid.
+# Showing the grid.
 def getGrid(pattern):
     return pattern.split(' ')[0]
 
