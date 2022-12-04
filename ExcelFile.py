@@ -1,19 +1,18 @@
 import csv
 from os.path import exists
-from pathlib import Path
 
 
 class ExcelFile:
     def __init__(self):
         file_exists = exists('Solution.csv')
         if file_exists:
-            self.file = open('../../Downloads/Solution.csv', 'a', newline='')
+            self.file = open('Solution.csv', 'a', newline='')
             self.header = ['Puzzle Number', 'Algorithm', 'Heuristic', 'Length of the Solution',
                            'Length of the Search Path',
                            'Execution Time (in seconds)']
             return
         else:
-            self.file = open('../../Downloads/Solution.csv', 'w', newline='')
+            self.file = open('Solution.csv', 'w', newline='')
             self.time = ''
             self.search_path_length = ''
             self.heuristic = ''
@@ -46,7 +45,7 @@ class ExcelFile:
         self.time = time
 
     def write_row(self):
-        self.file = open('../../Downloads/Solution.csv', 'a', newline='')
+        self.file = open('Solution.csv', 'a', newline='')
         with self.file:
             self.header = ['Puzzle Number', 'Algorithm', 'Heuristic', 'Length of the Solution',
                            'Length of the Search Path',

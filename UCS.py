@@ -75,7 +75,7 @@ def goCol(pattern, v, s):
     return ans
 
 
-# Same with canCol.
+# Verify if the vehicule can move horizontally
 def canRow(pattern, v, s):
     if s == 0:
         return False
@@ -101,7 +101,7 @@ def canRow(pattern, v, s):
     return True
 
 
-# Same with goCol.
+# move the vehicule horizontaly
 def goRow(pattern, v, s):
     ans = pattern
     r = 0
@@ -126,7 +126,7 @@ def goRow(pattern, v, s):
     return ans
 
 
-# Solve the problem using the Uniform Cost Search algorithm.
+# Solving the problem using the Uniform Cost Search algorithm.
 def SolveUCS(pattern, testCase):
     beg = float(time.time())
     fuel = getFuel(pattern)
