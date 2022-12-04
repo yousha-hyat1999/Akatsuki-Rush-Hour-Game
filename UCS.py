@@ -130,34 +130,34 @@ def goRow(pattern, v, s):
 def SolveUCS(pattern, testCase):
     beg = float(time.time())
     fuel = getFuel(pattern)
-    S = f"usc-sol-{testCase}.txt"
-    G = open(S, "w")
-    G.write("--------------------------------------------------------------------------------\n\n")
-    G.write("Initial board configuration: ")
-    G.write(pattern + "\n\n")
-    G.write("!\n")
+    file_name = f"usc-sol-{testCase}.txt"
+    file = open(file_name, "w")
+    file.write("--------------------------------------------------------------------------------\n\n")
+    file.write("Initial board configuration: ")
+    file.write(pattern + "\n\n")
+    file.write("!\n")
     for i in range(6):
         for j in range(6):
-            G.write(pattern[i * 6 + j])
-        G.write("\n")
-    G.write("\n")
-    G.write("Car fuel available: ")
+            file.write(pattern[i * 6 + j])
+        file.write("\n")
+    file.write("\n")
+    file.write("Car fuel available: ")
     start = 0
     for i in fuel:
         if start == 1:
-            G.write(", ")
-        G.write(i)
-        G.write(":")
-        G.write(f"{fuel[i]}")
+            file.write(", ")
+        file.write(i)
+        file.write(":")
+        file.write(f"{fuel[i]}")
         start = 1
-    G.write("\n")
-    S = f"ucs-search-{testCase}.txt"
+    file.write("\n")
+    file_name = f"ucs-search-{testCase}.txt"
     # writing to an excel file
     excel_file = ExcelFile.ExcelFile()
     excel_file.set_puzzle_number(testCase)
     excel_file.set_algorithm("UCS")
     excel_file.set_heuristic('NO HEURISTIC')
-    H = open(S, "w")
+    H = open(file_name, "w")
     Q = [pattern]
     st = {}
     st[getGrid(pattern)] = 0
@@ -223,12 +223,12 @@ def SolveUCS(pattern, testCase):
                         Q.append(tmp)
 
     if len(Q) == 0:
-        G.write("Sorry, could not solve the puzzle as specified.\nError: no solution found\n")
+        file.write("Sorry, could not solve the puzzle as specified.\nError: no solution found\n")
         end = float(time.time())
         t = end - beg
         t = float(int(t * 100)) / 100
         excel_file.set_time(t)
-        G.write(f"\nRuntime: {t} seconds\n")
+        file.write(f"\nRuntime: {t} seconds\n")
         excel_file.set_solution_length("none")
         excel_file.set_search_path_length("none")
         excel_file.write_row()
@@ -237,9 +237,9 @@ def SolveUCS(pattern, testCase):
         end = float(time.time())
         t = end - beg
         t = float(int(t * 100)) / 100
-        G.write(f"\nRuntime: {t} seconds\n")
-        G.write(f"Search path length: {searchPathLength} states\n")
-        G.write(f"Solution path length: {solutionPathLength} moves\n")
+        file.write(f"\nRuntime: {t} seconds\n")
+        file.write(f"Search path length: {searchPathLength} states\n")
+        file.write(f"Solution path length: {solutionPathLength} moves\n")
         excel_file.set_time(t)
         excel_file.set_search_path_length(searchPathLength)
         excel_file.set_solution_length(solutionPathLength)
@@ -253,12 +253,12 @@ def SolveUCS(pattern, testCase):
             ope = memSol[getGrid(finalState)]
             move = ope.split(' ')
             solutionPath.append(ope)
-            curFuel = getFuel(finalState)
-            impleState.append(ope + "    " + str(curFuel[move[0]]) + finalState)
-            curFuel[move[0]] += 1
+            car_fuel = getFuel(finalState)
+            impleState.append(ope + "    " + str(car_fuel[move[0]]) + finalState)
+            car_fuel[move[0]] += 1
 
-            if curFuel[move[0]] == 100:
-                curFuel.pop(move[0])
+            if car_fuel[move[0]] == 100:
+                car_fuel.pop(move[0])
             if (move[1][0] == 'u'):
                 finalState = goCol(getGrid(finalState), move[0], int(move[2]))
             if (move[1][0] == 'd'):
@@ -267,37 +267,37 @@ def SolveUCS(pattern, testCase):
                 finalState = goRow(getGrid(finalState), move[0], int(move[2]))
             if (move[1][0] == 'r'):
                 finalState = goRow(getGrid(finalState), move[0], -int(move[2]))
-            for i in curFuel:
-                if curFuel[i] == 100:
+            for i in car_fuel:
+                if car_fuel[i] == 100:
                     continue
-                finalState = finalState + " " + i + str(curFuel[i])
+                finalState = finalState + " " + i + str(car_fuel[i])
 
-        G.write("Solution path:")
+        file.write("Solution path:")
         SJ = 0
         for i in range(len(solutionPath) - 1, -1, -1):
             if SJ == 1:
-                G.write(";")
-            G.write(" " + solutionPath[i])
+                file.write(";")
+            file.write(" " + solutionPath[i])
             SJ = 1
-        G.write("\n\n")
+        file.write("\n\n")
         for i in range(len(impleState) - 1, -1, -1):
-            G.write(impleState[i])
-            G.write("\n")
-        G.write("\n")
+            file.write(impleState[i])
+            file.write("\n")
+        file.write("\n")
 
-        G.write("!")
+        file.write("!")
         for i in finalFuel:
             if finalFuel[i] == 100:
                 continue
-            G.write(" " + i + str(finalFuel[i]))
-        G.write("\n")
+            file.write(" " + i + str(finalFuel[i]))
+        file.write("\n")
         for i in range(6):
             for j in range(6):
-                G.write(finalGrid[i * 6 + j])
-            G.write("\n")
-        G.write("\n")
+                file.write(finalGrid[i * 6 + j])
+            file.write("\n")
+        file.write("\n")
 
-    G.write("--------------------------------------------------------------------------------\n\n")
+    file.write("--------------------------------------------------------------------------------\n\n")
 
 
 
